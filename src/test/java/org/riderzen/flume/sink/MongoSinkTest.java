@@ -27,14 +27,14 @@ public class MongoSinkTest {
     private static Mongo mongo;
     public static final String DBNAME = "myDb";
 
-    private static Context ctx = new Context();
+    private static Context ctx;
     private static Channel channel;
 
 
     @BeforeMethod(groups = {"dev"})
     public static void setup() throws UnknownHostException {
         mongo = new Mongo("localhost", 27017);
-
+        ctx = new Context();
         Map<String, String> ctxMap = new HashMap<String, String>();
         ctxMap.put(MongoSink.HOST, "localhost");
         ctxMap.put(MongoSink.PORT, "27017");
