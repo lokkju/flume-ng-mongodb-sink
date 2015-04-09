@@ -7,12 +7,11 @@ Flume NG MongoDB sink. The source was implemented to populate JSON into MongoDB.
 - - -
 1. Clone the repository
 2. Install latest Maven and build source by 'mvn package'
-3. Generate classpath by 'mvn dependency:build-classpath'
-4. Append classpath in $FLUME_HOME/conf/flume-env.sh
-5. Add the sink definition according to **Configuration**
+3. extract the generated tar.gz from the target directory to your ${FLUME_HOME}/plugins.d/ directory
+4. Add the sink definition according to **Configuration**
 
 ## Configuration
-- - - 
+- - -
 	type: org.riderzen.flume.sink.MongoSink
 	host: db host [localhost]
 	port: db port [27017]
@@ -47,22 +46,22 @@ Flume NG MongoDB sink. The source was implemented to populate JSON into MongoDB.
 	agent2.sources = source2
 	agent2.channels = channel2
 	agent2.sinks = sink2
-	
+
 	agent2.sources.source2.type = org.riderzen.flume.source.MsgPackSource
 	agent2.sources.source2.bind = localhost
 	agent2.sources.source2.port = 1985
-	
+
 	agent2.sources.source2.channels = channel2
-	
+
 	agent2.sinks.sink2.type = org.riderzen.flume.sink.MongoSink
 	agent2.sinks.sink2.host = localhost
 	agent2.sinks.sink2.port = 27017
 	agent2.sinks.sink2.model = single
 	agent2.sinks.sink2.collection = events
 	agent2.sinks.sink2.batch = 100
-	
+
 	agent2.sinks.sink2.channel = channel2
-	
+
 	agent2.channels.channel2.type = memory
 	agent2.channels.channel2.capacity = 1000000
 	agent2.channels.channel2.transactionCapacity = 800
