@@ -420,6 +420,7 @@ public class MongoSinkTest {
 
     }
 
+    // TODO: Currently failing because the upsert command inserts the timestamp as a String, not Date
     @Test(groups = "dev")
     public void upsertTest() throws EventDeliveryException, ParseException {
         ctx.put(MongoSink.MODEL, MongoSink.CollectionModel.dynamic.name());

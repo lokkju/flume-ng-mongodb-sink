@@ -165,6 +165,7 @@ public class MongoSink extends AbstractSink implements Configurable {
 
             //Warning: please change the WriteConcern level if you need high datum consistence.
             DB db = mongo.getDB(eventDb);
+            if(db == null) {logger.error("Can't access DB");}
             if (authentication_enabled) {
                 boolean authResult = db.authenticate(username, password.toCharArray());
                 if (!authResult) {
@@ -172,7 +173,9 @@ public class MongoSink extends AbstractSink implements Configurable {
                     return;
                 }
             }
-            CommandResult result = db.getCollection(collectionName).insert(docs, WriteConcern.NORMAL).getLastError();
+            DBCollection collection = db.getCollection( collectionName );
+            if(collection == null) {logger.error("Can't access collection");}
+            CommandResult result = collection.insert(docs, WriteConcern.NORMAL).getLastError();
             if (result.ok()) {
                 String errorMessage = result.getErrorMessage();
                 if (errorMessage != null) {
