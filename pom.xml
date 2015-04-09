@@ -18,7 +18,7 @@
     <name>Flume NG MongoDB sink</name>
 
     <properties>
-        <mongo-java.version>2.13.1</mongo-java.version>
+        <mongo-java.version>2.13.0</mongo-java.version>
         <flume.version>1.5.2</flume.version>
     </properties>
 
@@ -28,12 +28,14 @@
             <groupId>org.apache.flume</groupId>
             <artifactId>flume-ng-sdk</artifactId>
             <version>${flume.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.flume</groupId>
             <artifactId>flume-ng-core</artifactId>
             <version>${flume.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -52,7 +54,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.7</version>
+            <version>6.8</version>
             <scope>test</scope>
         </dependency>
 
@@ -66,6 +68,12 @@
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
+            <exclusions>
+              <exclusion>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>
@@ -79,17 +87,34 @@
                     <groups>unit</groups>
                 </configuration>
             </plugin>
-<plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.0</version>
-        <configuration>
-          <verbose>true</verbose>
-          <fork>true</fork>
-          <compilerVersion>1.5</compilerVersion>
-        </configuration>
-      </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.0</version>
+              <configuration>
+                <verbose>true</verbose>
+                <fork>true</fork>
+                <compilerVersion>1.5</compilerVersion>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-assembly-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>create-distribution</id>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>single</goal>
+                  </goals>
+                  <configuration>
+                    <descriptors>
+                      <descriptor>src/main/assembly/assembly.xml</descriptor>
+                    </descriptors>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
         </plugins>
     </build>
-
 </project>
